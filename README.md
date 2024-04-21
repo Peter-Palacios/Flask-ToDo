@@ -39,3 +39,17 @@
 - Mabl:
   - Verify user accounts are created successfully.
   - Test situations like incorrect login credentials, or successful registry.
+
+
+
+### Curl Requests:
+**Create Lists:**
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{"new_list":"example_1"}' http://127.0.0.1:5000/list
+
+```
+**GET Lists:**
+```
+ curl -i -H "Content-Type: application/json" -X GET  http://127.0.0.1:5000/tasks
+```
+
