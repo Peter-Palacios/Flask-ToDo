@@ -45,11 +45,20 @@
 ### Curl Requests:
 **Create Lists:**
 ```
-curl -i -H "Content-Type: application/json" -X POST -d '{"new_list":"example_1"}' http://127.0.0.1:5000/list
+curl -i -H "Content-Type: application/json" -X POST -d '{"new_list":"example_A"}' http://127.0.0.1:5000/list
 
+```
+**Create tasks:**
+```
+curl -i -H "Content-Type: application/json" -X POST  http://127.0.0.1:5000/list/example_A/task/clean-room
 ```
 **GET Lists:**
 ```
  curl -i -H "Content-Type: application/json" -X GET  http://127.0.0.1:5000/tasks
+```
+**DELETE tasks:**
+```
+curl -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/list/example_A/task/clean-room
+
 ```
 

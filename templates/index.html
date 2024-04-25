@@ -3,17 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple To-Do List</title>
+    <script>
+        async function updateTaskList() {
+            const response = await fetch('/tasks');
+            const tasks = await response.json();
+            const taskListElement = document.getElementById('taskList');
+            taskListElement.innerHTML = ''; // Clear existing list
+            Object.keys(tasks).forEach(list => {
+                let listElement = document.createElement('li');
+                listElement.textContent = `List: ${list}`;
+                let taskUl = document.createElement('ul');
+                tasks[list].forEach(task => {
+                    let taskItem = document.createElement('li');
+                    taskItem.textContent = task;
+                    taskUl.appendChild(taskItem);
+                });
+                taskListElement.appendChild(listElement);
+                taskListElement.appendChild(taskUl);
+            });
+        }
+
+        async function addTaskToList(list, task) {
+            console.log("Adding task:", task, "to list:", list);
+            const response = await fetch(`/list/${list}/task/${task}`, {
+                method: 'POST',
+            });
+            console.log("Response received:", response);
+            if (response.ok) {
+                await updateTaskList();
+            } else {
+                console.error("Failed to add task. Status:", response.status);
+            }
+        }
+
+        async function removeTaskFromList(list, task) {
+            const response = await fetch(`/list/${list}/task/${task}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                await updateTaskList();
+            }
+        }
+
+        async function createList(listName) {
+            const response = await fetch(`/list`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ new_list: listName }),
+            });
+            if (response.ok) {
+                await updateTaskList();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateTaskList);
+    </script>
 </head>
 <body>
     <h1>To-Do List</h1>
-    <form action="/add" method="post">
+    <form name= "addList" onsubmit="event.preventDefault(); createList(this.elements['listName'].value);">
+        <input type="text" name="listName" placeholder="Enter new list name" required>
+        <button type="submit">Create List</button>
+    </form>
+
+    <form name= "addTask" onsubmit="event.preventDefault(); addTaskToList(this.elements['listName'].value, this.elements['title'].value);">
+        <input type="text" name="listName" placeholder="Enter list name" required>
         <input type="text" name="title" placeholder="Enter task" required>
         <button type="submit">Add Task</button>
     </form>
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task }}</li>
-        {% endfor %}
+
+    <form name= "removeTask" onsubmit="event.preventDefault(); removeTaskFromList(this.elements['listName'].value, this.elements['title'].value);">
+        <input type="text" name="listName" placeholder="Enter list name" required>
+        <input type="text" name="title" placeholder="Task to remove" required>
+        <button type="submit">Remove Task</button>
+    </form>
+
+    <ul id="taskList">
     </ul>
 </body>
 </html>
