@@ -22,13 +22,6 @@
 -Mabl:
   - Confirm tasks are displayed correctly after being created.
 
-**Search & Filter Functionality:**
-- Actions:
-    - Users can filter by due dates, completion status, or keyword(s).
-- SQL:
-  - Use SQL queries to filter, using user-input.
-- Mabl:
-  - Verify that the displayed tasks match specified criteria.
 
 **User Authentication:**
 - Users can create an account, log in, & log out. Only users with an account can access/use the to-do list program.

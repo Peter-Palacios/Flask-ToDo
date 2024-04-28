@@ -25,8 +25,12 @@
 
         async function addTaskToList(list, task) {
             console.log("Adding task:", task, "to list:", list);
-            const response = await fetch(`/list/${list}/task/${task}`, {
+            const response = await fetch(`/list/${list}/task`, {
                 method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({task_title: task})
             });
             console.log("Response received:", response);
             if (response.ok) {
@@ -37,8 +41,12 @@
         }
 
         async function removeTaskFromList(list, task) {
-            const response = await fetch(`/list/${list}/task/${task}`, {
+            const response = await fetch(`/list/${list}/task`, {
                 method: 'DELETE',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({task_title: task})
             });
             if (response.ok) {
                 await updateTaskList();
@@ -81,6 +89,15 @@
         <input type="text" name="title" placeholder="Task to remove" required>
         <button type="submit">Remove Task</button>
     </form>
+
+{#      {% for list in taskList %}#}
+{#        <h2>{{ list.list_name }}</h2>#}
+{#        <ul>#}
+{#            {% for task in list.tasks %}#}
+{#                <li>{{ task.task_title }}</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% endfor %}#}
 
     <ul id="taskList">
     </ul>
