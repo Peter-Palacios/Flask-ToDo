@@ -34,7 +34,7 @@
 
 
 
-### Curl Requests:
+### Curl Requests Examples:
 **Create Lists:**
 ```
 curl -i -H "Content-Type: application/json" -X POST -d '{"new_list":"example_A"}' http://127.0.0.1:5000/list
