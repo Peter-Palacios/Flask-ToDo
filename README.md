@@ -22,7 +22,6 @@
 -Mabl:
   - Confirm tasks are displayed correctly after being created.
 
-
 **User Authentication:**
 - Users can create an account, log in, & log out. Only users with an account can access/use the to-do list program.
 -   Flask:
@@ -35,7 +34,7 @@
 
 
 
-### Curl Requests:
+### Curl Requests Examples:
 **Create Lists:**
 ```
 curl -i -H "Content-Type: application/json" -X POST -d '{"new_list":"example_A"}' http://127.0.0.1:5000/list
